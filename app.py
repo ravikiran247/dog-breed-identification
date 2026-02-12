@@ -5,7 +5,7 @@ import gdown
 from flask import Flask, render_template, request
 from tensorflow.keras.preprocessing import image
 
-app = Flask(name)
+app = Flask(__name__)
 
 UPLOAD_FOLDER = "static/uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
