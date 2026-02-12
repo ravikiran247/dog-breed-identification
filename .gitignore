@@ -1,0 +1,8 @@
+dogenv/
+train/
+dataset/
+dataset_20/
+pycache/
+*.pyc
+static/uploads/
+dogbreed.h5
