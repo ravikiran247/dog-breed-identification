@@ -1,4 +1,11 @@
 import os
+
+if not os.path.exists("dogbreed.h5"):
+    import subprocess
+    subprocess.run(["kaggle", "datasets", "download", "-d", "ravi2k/dog-breed-identification"])
+    subprocess.run(["unzip", "-o", "dog-breed-identification.zip"])
+    model = tf.keras.models.load_model("dogbreed.h5")
+import os
 import numpy as np
 import tensorflow as tf
 from flask import Flask, render_template, request
@@ -48,7 +55,3 @@ def predict():
                                image_path=filepath)
 
     return "No file uploaded"
-
-
-if __name__ == "__main__":
-    app.run()
