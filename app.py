@@ -5,29 +5,32 @@ import gdown
 from flask import Flask, render_template, request
 from tensorflow.keras.preprocessing import image
 
-app = Flask(__name__)
+app = Flask(name)
 
 UPLOAD_FOLDER = "static/uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-# Google Drive file ID
 FILE_ID = "1uWGnAKEvL6jdzPd84nx2zJgjniNEXgmH"
 MODEL_PATH = "dogbreed.h5"
 
-# Download model if not present
-if not os.path.exists(MODEL_PATH):
-    url = f"https://drive.google.com/uc?id={FILE_ID}"
-    gdown.download(url, MODEL_PATH, quiet=False)
-
-# Lazy loading
 model = None
+
 
 def get_model():
     global model
+
     if model is None:
+
+        # Download only if not present
+        if not os.path.exists(MODEL_PATH):
+            url = f"https://drive.google.com/uc?id={FILE_ID}"
+            gdown.download(url, MODEL_PATH, quiet=False)
+
         model = tf.keras.models.load_model(MODEL_PATH)
+
     return model
+
 
 class_names = [
     'affenpinscher','beagle','appenzeller','basset','bluetick',
@@ -36,9 +39,11 @@ class_names = [
     'redbone','shih-tzu','toy_poodle','vizsla','whippet'
 ]
 
+
 @app.route("/")
 def home():
     return render_template("index.html")
+
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -58,7 +63,8 @@ def predict():
     img_array = np.expand_dims(img_array, axis=0)
     img_array = img_array / 255.0
 
-    prediction = get_model().predict(img_array)
+    model = get_model()
+    prediction = model.predict(img_array)
     predicted_class = class_names[np.argmax(prediction)]
 
     return render_template(
