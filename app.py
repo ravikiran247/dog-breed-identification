@@ -39,10 +39,26 @@ def get_model():
 
 
 class_names = [
-    'affenpinscher','beagle','appenzeller','basset','bluetick',
-    'boxer','cairn','doberman','german_shepherd','golden_retriever',
-    'kelpie','komondor','leonberg','mexican_hairless','pug',
-    'redbone','shih-tzu','toy_poodle','vizsla','whippet'
+    'affenpinscher',
+    'appenzeller',
+    'basset',
+    'beagle',
+    'bluetick',
+    'boxer',
+    'cairn',
+    'doberman',
+    'german_shepherd',
+    'golden_retriever',
+    'kelpie',
+    'komondor',
+    'leonberg',
+    'mexican_hairless',
+    'pug',
+    'redbone',
+    'shih-tzu',
+    'toy_poodle',
+    'vizsla',
+    'whippet'
 ]
 
 
