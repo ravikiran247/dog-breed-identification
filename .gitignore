@@ -6,3 +6,4 @@ pycache/
 *.pyc
 static/uploads/
 dogbreed.h5
+tfenv/
