@@ -47,7 +47,6 @@ def home():
 
 @app.route("/predict", methods=["POST"])
 def predict():
-
     if "image" not in request.files:
         return "No file uploaded"
 
@@ -66,14 +65,10 @@ def predict():
 
     model = get_model()
     prediction = model.predict(img_array)
-
-    confidence = float(np.max(prediction)) * 100
     predicted_class = class_names[np.argmax(prediction)]
-    confidence = round(confidence, 2)
 
     return render_template(
         "result.html",
         prediction=predicted_class,
-        confidence=confidence,
         image_path=filepath
     )
