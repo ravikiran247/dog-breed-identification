@@ -1,6 +1,6 @@
-tflite-runtime==2.14.0
-numpy==1.26.4
 flask
 gunicorn
-gdown
+numpy==1.26.4
 pillow
+tflite-runtime==2.14.0
+gdown
