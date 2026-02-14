@@ -1,5 +1,5 @@
-tflite-runtime
-numpy
+tflite-runtime==2.14.0
+numpy==1.26.4
 flask
 gunicorn
 gdown
