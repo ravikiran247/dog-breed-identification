@@ -1,23 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Prediction Result</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #84fab0, #8fd3f4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            text-align: center;
+            width: 450px;
+            animation: popIn 0.6s ease-in-out;
+        }
+
+        img {
+            width: 200px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #ff5722;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+            background: #ff7b54;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            background: #ff5722;
+        }
+
+        @keyframes popIn {
+            from {transform: scale(0.8); opacity: 0;}
+            to {transform: scale(1); opacity: 1;}
+        }
+    </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="card">
-        <h1>🎯 Prediction Result</h1>
+<div class="card">
+    <h2>Woof! 🐕</h2>
+    <p>Your dog looks like a:</p>
+    <h1>{{ prediction }}</h1>
 
-        <img src="{{ image_path }}" class="preview">
+    <img src="/{{ image_path }}" alt="Uploaded Image">
 
-        <h2 class="result">{{ prediction }}</h2>
-
-        <a href="/" class="back-btn">Try Another Image</a>
-    </div>
+    <br>
+    <a href="/">Try Another 🐾</a>
 </div>
 
 </body>
