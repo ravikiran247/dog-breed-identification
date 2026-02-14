@@ -1,6 +1,6 @@
-flask
-tensorflow==2.12.0
+tflite-runtime
 numpy
-Pillow
+flask
 gunicorn
 gdown
+pillow

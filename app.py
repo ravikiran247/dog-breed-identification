@@ -1,9 +1,9 @@
 import os
 import numpy as np
-import tensorflow as tf
 import gdown
 from flask import Flask, render_template, request
-from tensorflow.keras.preprocessing import image
+from PIL import Image
+import tflite_runtime.interpreter as tflite
 
 app = Flask(__name__)
 
@@ -12,24 +12,30 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 FILE_ID = "1uWGnAKEvL6jdzPd84nx2zJgjniNEXgmH"
-MODEL_PATH = "dogbreed.h5"
+MODEL_PATH = "dogbreed.tflite"
 
-model = None
+interpreter = None
+input_details = None
+output_details = None
 
 
 def get_model():
-    global model
+    global interpreter, input_details, output_details
 
-    if model is None:
+    if interpreter is None:
 
-        # Download only if not present
+        # Download model if not present
         if not os.path.exists(MODEL_PATH):
             url = f"https://drive.google.com/uc?id={FILE_ID}"
             gdown.download(url, MODEL_PATH, quiet=False)
 
-        model = tf.keras.models.load_model(MODEL_PATH)
+        interpreter = tflite.Interpreter(model_path=MODEL_PATH)
+        interpreter.allocate_tensors()
 
-    return model
+        input_details = interpreter.get_input_details()
+        output_details = interpreter.get_output_details()
+
+    return interpreter
 
 
 class_names = [
@@ -58,13 +64,17 @@ def predict():
     filepath = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
     file.save(filepath)
 
-    img = image.load_img(filepath, target_size=(128, 128))
-    img_array = image.img_to_array(img)
+    img = Image.open(filepath).resize((128, 128))
+    img_array = np.array(img, dtype=np.float32)
     img_array = np.expand_dims(img_array, axis=0)
     img_array = img_array / 255.0
 
-    model = get_model()
-    prediction = model.predict(img_array)
+    interpreter = get_model()
+
+    interpreter.set_tensor(input_details[0]['index'], img_array)
+    interpreter.invoke()
+
+    prediction = interpreter.get_tensor(output_details[0]['index'])
     predicted_class = class_names[np.argmax(prediction)]
 
     return render_template(
