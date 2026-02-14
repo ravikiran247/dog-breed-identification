@@ -1,18 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Prediction Result</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body style="text-align:center; font-family:Arial;">
+<body>
 
-    <h1>Prediction Result</h1>
+<div class="container">
+    <div class="card">
+        <h1>🎯 Prediction Result</h1>
 
-    <h2>Predicted Breed: {{ prediction }}</h2>
+        <img src="{{ image_path }}" class="preview">
 
-    <img src="{{ image_path }}" width="300">
+        <h2 class="result">{{ prediction }}</h2>
 
-    <br><br>
-    <a href="/">Try Another Image</a>
+        <a href="/" class="back-btn">Try Another Image</a>
+    </div>
+</div>
 
 </body>
 </html>

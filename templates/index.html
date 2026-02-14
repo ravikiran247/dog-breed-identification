@@ -1,17 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Dog Breed Predictor</title>
+    <meta charset="UTF-8">
+    <title>Dog Breed Identifier</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body style="text-align:center; font-family:Arial;">
+<body>
 
-    <h1>Dog Breed Identification</h1>
+<div class="container">
+    <div class="card">
+        <h1>🐶 Dog Breed Identification</h1>
+        <p class="subtitle">
+            Upload a dog image and let our AI predict the breed using Deep Learning.
+        </p>
 
-    <form action="/predict" method="POST" enctype="multipart/form-data">
-        <input type="file" name="image" required>
-        <br><br>
-        <input type="submit" value="Predict">
-    </form>
+        <form action="/predict" method="POST" enctype="multipart/form-data">
+            <input type="file" name="image" required>
+            <button type="submit">Predict Breed</button>
+        </form>
+    </div>
+</div>
 
 </body>
 </html>
